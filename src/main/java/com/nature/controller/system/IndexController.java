@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +35,14 @@ public class IndexController extends BaseController
     Logger logger = LoggerFactory.getLogger(IndexController.class);
 
 
+    /**
+     * 进入首页
+     * To index string.
+     *
+     * @return the string
+     * @author:竺志伟
+     * @date :2018-05-29 17:05:17
+     */
     @RequestMapping(value = "/")
     public String toIndex()
     {
@@ -41,25 +50,38 @@ public class IndexController extends BaseController
     }
 
 
-
-    // 设置 session
-    @RequestMapping(value = "/sessionSet")
-    @ResponseBody
-    public CommonResult session()
+    /**
+     * 进入 登录页面
+     * To login string.
+     *
+     * @return the string
+     * @author:竺志伟
+     * @date :2018-05-29 17:05:31
+     */
+    @RequestMapping(value = "/toLogin")
+    public String toLogin()
     {
-        logger.info(String.format("%s:%s,sessio 设置",request.getRemoteAddr(),request.getRemotePort()));
-        request.getSession().setAttribute("user", new Random().nextInt(1000));
-        return resultSuccessWrapper("成功",null);
+        return "login_vm";
     }
 
-    // 获取session
-    @RequestMapping(value = "/sessionGet")
+    /**
+     * 登录
+     * Login common result.
+     *
+     * @param loginName the login name
+     * @param loginPass the login pass
+     * @return the common result
+     * @author:竺志伟
+     * @date :2018-05-29 17:07:16
+     */
+    @RequestMapping(value = "/login")
     @ResponseBody
-    public CommonResult sessionGet()
+    public CommonResult login(
+            @RequestParam(value = "loginName", defaultValue = "", required = true) String loginName,
+            @RequestParam(value = "loginPass", defaultValue = "", required = true) String loginPass)
     {
-        logger.info(String.format("%s:%s,sessio 获取",request.getRemoteAddr(),request.getRemotePort()));
-        return resultSuccessWrapper("session",request.getRemoteHost() + "-"+ request.getSession().getAttribute
-                ("user"));
+
+        return resultBoolWrapper(false, "登录成功", "用户名密码错误", null);
     }
 
 
@@ -75,6 +97,6 @@ public class IndexController extends BaseController
     @ResponseBody
     public CommonResult mybatis()
     {
-        return resultSuccessWrapper("用户查询成功",adminService.listPage(1,10,null));
+        return resultSuccessWrapper("用户查询成功", adminService.listPage(1, 10, null));
     }
 }

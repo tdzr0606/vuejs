@@ -1,5 +1,7 @@
-<head>
-    <meta charset="utf-8">
-    <script type="text/javascript" src="/js/vue_debug.js"></script>
-    <title>vuejs</title>
-</head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="text/javascript" src="/js/vue_debug.js"></script>
+
+<link href="/sui/css/sui.min.css" rel="stylesheet">
+<script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/sui/sui.min.js"></script>

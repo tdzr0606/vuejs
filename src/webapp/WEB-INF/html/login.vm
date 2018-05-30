@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    #include("inc/inc_head.vm")
+</head>
+<body>
+<div class="sui-container" style="width: 400px;margin-top: 100px;">
+
+    <ul class="sui-nav nav-tabs nav-xlarge nav-primary" style="width: 400px;">
+        <li class="active"><a>登录</a></li>
+    </ul>
+
+    <div id="errorDiv" class="sui-msg msg-large msg-error"
+         style="width: 400px;margin-top: 10px; margin-bottom: 10px; display: none">
+        <div class="msg-con" id="errorMsg"></div>
+        <s class="msg-icon"></s>
+    </div>
+    <div class="tab-content tab-wraped" style="width: 400px;border:0px;">
+        <div class="tab-pane active" style="width: 400px;">
+            <form class="sui-form form-horizontal  sui-validate" id="loginForm" method="post" action="/login">
+                <div class="control-group"><input type="text"
+                                                  class="input-info input-xlarge input-xfat"
+                                                  id="loginName"
+                                                  name="loginName"
+                                                  data-empty-msg="请输入登录用户名"
+                                                  placeholder="用户名"
+                                                  data-rules="required">
+                </div>
+                <div class="control-control"><input type="password"
+                                                    class="input-info input-xfat input-xlarge"
+                                                    id="loginPass"
+                                                    name="loginPass"
+                                                    data-rules="required|minlength=6"
+                                                    data-empty-msg="请输入登录密码"
+                                                    placeholder="密码">
+                </div>
+                <div class="control-control" style="width:400px;padding: 10px; text-align: center">
+                    <button type="button" class="sui-btn btn-bordered btn-xlarge btn-primary" id="btnSub"
+                            style="margin-right: 30px;">提交
+                    </button>
+                    <button type="button" class="sui-btn btn-bordered btn-xlarge btn-danger"
+                            id="btnCanc">取消
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function ()
+    {
+        $('#btnSub').click(function ()
+        {
+            $.ajax({
+                url: '/login',
+                data: $('#loginForm').serialize(),
+                type: 'post',
+                dataType: 'json',
+                success: function (data)
+                {
+                    if (data.success)
+                    {
+                        window.location.href = "/?sessionId=" + new Date().getTime();
+                    }
+                    else
+                    {
+                        $('#errorDiv').show();
+                        $('#errorMsg').text(data.message);
+                        $('#loginName').val('');
+                        $('#loginPass').val('');
+                    }
+                },
+                error: function (data)
+                {
+                }
+            });
+        });
+        $('#btnCanc').click(function ()
+        {
+            $('#loginForm')[0].reset();
+        });
+    })
+</script>
+
+</body>
+</html>

@@ -21,104 +21,135 @@ import java.util.regex.Pattern;
  * @Author: 竺志伟
  * @Date: 2018 -01-09 15:10
  */
-public class XssCodeWrapper extends HttpServletRequestWrapper {
+public class XssCodeWrapper extends HttpServletRequestWrapper
+{
     boolean isUpData = false;//判断是否是上传 上传忽略
     boolean isStrict = false;//是否严格模式
 
-    public XssCodeWrapper(HttpServletRequest request) {
+    public XssCodeWrapper(HttpServletRequest request)
+    {
         super(request);
         String contentType = request.getContentType();
-        if (null != contentType) {
+        if(null != contentType)
+        {
             isUpData = contentType.startsWith("multipart");
         }
-        String url = request.getRequestURI();
-        isStrict = url.equals("/searchList") || url.equals("/login");
-        System.out.println("XssCodeWrapper init isUpData：" + isUpData);
-        System.out.println("XssCodeWrapper init isStrict：" + isStrict);
     }
 
     @Override
-    public String[] getParameterValues(String parameter) {
+    public String[] getParameterValues(String parameter)
+    {
         String[] values = super.getParameterValues(parameter);
-        if (values == null) return null;
+        if(values == null)
+            return null;
         int count = values.length;
         String[] encodedValues = new String[count];
-        for (int i = 0; i < count; i++) {
+        for(int i = 0; i < count; i++)
+        {
             encodedValues[i] = cleanXSS(values[i]);
         }
         return encodedValues;
     }
 
     @Override
-    public String getParameter(String parameter) {
+    public String getParameter(String parameter)
+    {
         String value = super.getParameter(parameter);
-        if (value == null) return null;
+        if(value == null)
+            return null;
         return cleanXSS(value);
     }
 
     @Override
-    public String getHeader(String name) {
+    public String getHeader(String name)
+    {
         String value = super.getHeader(name);
-        if (value == null) return null;
+        if(value == null)
+            return null;
         return cleanXSS(value);
     }
 
     @Override
-    public ServletInputStream getInputStream() throws IOException {
-        if (isUpData) {
+    public ServletInputStream getInputStream() throws IOException
+    {
+        if(isUpData)
+        {
             return super.getInputStream();
-        } else {
+        }
+        else
+        {
 
-            final ByteArrayInputStream bais = new ByteArrayInputStream(inputHandlers(super.getInputStream()).getBytes());
+            final ByteArrayInputStream bais =
+                    new ByteArrayInputStream(inputHandlers(super.getInputStream()).getBytes());
 
-            return new ServletInputStream() {
+            return new ServletInputStream()
+            {
 
                 @Override
-                public int read() throws IOException {
+                public int read() throws IOException
+                {
                     return bais.read();
                 }
 
                 @Override
-                public boolean isFinished() {
+                public boolean isFinished()
+                {
                     return false;
                 }
 
                 @Override
-                public boolean isReady() {
+                public boolean isReady()
+                {
                     return false;
                 }
 
                 @Override
-                public void setReadListener(ReadListener readListener) {
+                public void setReadListener(ReadListener readListener)
+                {
 
                 }
             };
         }
     }
 
-    private String inputHandlers(ServletInputStream servletInputStream) {
+    private String inputHandlers(ServletInputStream servletInputStream)
+    {
         StringBuilder sb = new StringBuilder();
         BufferedReader reader = null;
-        try {
+        try
+        {
             reader = new BufferedReader(new InputStreamReader(servletInputStream, Charset.forName("UTF-8")));
             String line = "";
-            while ((line = reader.readLine()) != null) {
+            while((line = reader.readLine()) != null)
+            {
                 sb.append(line);
             }
-        } catch (IOException e) {
+        }
+        catch(IOException e)
+        {
             e.printStackTrace();
-        } finally {
-            if (servletInputStream != null) {
-                try {
+        }
+        finally
+        {
+            if(servletInputStream != null)
+            {
+                try
+                {
                     servletInputStream.close();
-                } catch (IOException e) {
+                }
+                catch(IOException e)
+                {
                     e.printStackTrace();
                 }
             }
-            if (reader != null) {
-                try {
+            if(reader != null)
+            {
+                try
+                {
                     reader.close();
-                } catch (IOException e) {
+                }
+                catch(IOException e)
+                {
                     e.printStackTrace();
                 }
             }
@@ -127,29 +158,38 @@ public class XssCodeWrapper extends HttpServletRequestWrapper {
     }
 
     //isStrict:是否严格模式
-    private String cleanXSS(String value) {
-        if (value != null) {
+    private String cleanXSS(String value)
+    {
+        if(value != null)
+        {
             value = value.replaceAll("", "");
             Pattern scriptPattern = Pattern.compile("<script>(.*?)</script>", Pattern.CASE_INSENSITIVE);
             value = scriptPattern.matcher(value).replaceAll("");
             scriptPattern = Pattern.compile("</script>", Pattern.CASE_INSENSITIVE);
             value = scriptPattern.matcher(value).replaceAll("");
-            scriptPattern = Pattern.compile("<script(.*?)>", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+            scriptPattern = Pattern.compile("<script(.*?)>",
+                    Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
             value = scriptPattern.matcher(value).replaceAll("");
-            scriptPattern = Pattern.compile("eval\\((.*?)\\)", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+            scriptPattern = Pattern.compile("eval\\((.*?)\\)",
+                    Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
             value = scriptPattern.matcher(value).replaceAll("");
-            scriptPattern = Pattern.compile("e­xpression\\((.*?)\\)", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+            scriptPattern = Pattern.compile("e­xpression\\((.*?)\\)",
+                    Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
             value = scriptPattern.matcher(value).replaceAll("");
             scriptPattern = Pattern.compile("javascript:", Pattern.CASE_INSENSITIVE);
             value = scriptPattern.matcher(value).replaceAll("");
             scriptPattern = Pattern.compile("vbscript:", Pattern.CASE_INSENSITIVE);
             value = scriptPattern.matcher(value).replaceAll("");
-            scriptPattern = Pattern.compile("onload(.*?)=", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+            scriptPattern =
+                    Pattern.compile("onload(.*?)=", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
             value = scriptPattern.matcher(value).replaceAll("");
-            if (isStrict) {
-                scriptPattern = Pattern.compile("src[\r\n]*=[\r\n]*\\\'(.*?)\\\'", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+            if(isStrict)
+            {
+                scriptPattern = Pattern.compile("src[\r\n]*=[\r\n]*\\\'(.*?)\\\'",
+                        Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
                 value = scriptPattern.matcher(value).replaceAll("");
-                scriptPattern = Pattern.compile("src[\r\n]*=[\r\n]*\\\"(.*?)\\\"", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+                scriptPattern = Pattern.compile("src[\r\n]*=[\r\n]*\\\"(.*?)\\\"",
+                        Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
                 value = scriptPattern.matcher(value).replaceAll("");
                 value = value.replaceAll("'", "&#39;");
                 value = value.replaceAll("/", "&#x2f;");

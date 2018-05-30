@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <html>
+<head>
     #include("inc/inc_head.vm")
+</head>
 <body>
+
+<a href="/toLogin">登录</a>
 <div id="app">
     {{ message }}
 </div>
