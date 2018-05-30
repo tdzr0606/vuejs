@@ -1,9 +1,12 @@
 package com.nature.controller.system;
 
 import com.nature.controller.basic.BaseController;
+import com.nature.pojo.system.Admin;
 import com.nature.service.system.AdminService;
 import com.nature.util.CommonResult;
 import com.nature.component.SigarUtils;
+import com.nature.util.DirectoryTools;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +84,13 @@ public class IndexController extends BaseController
             @RequestParam(value = "loginPass", defaultValue = "", required = true) String loginPass)
     {
 
-        return resultBoolWrapper(false, "登录成功", "用户名密码错误", null);
+        Admin admin = adminService.login(loginName, DigestUtils.md5Hex(loginPass));
+        if(null != admin)
+        {
+            request.getSession().setAttribute(DirectoryTools.SESSION_LOGIN_USER, admin);
+            return resultSuccessWrapper("登陆成功", null);
+        }
+        return resultFailsWrapper("用户名密码错误", null);
     }
 
 

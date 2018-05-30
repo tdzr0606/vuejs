@@ -2,115 +2,160 @@
 <html>
 <head>
     #include("inc/inc_head.vm")
+    <link href="/sui/css/sui-append.css" rel="stylesheet">
+    <style>
+        ul li {list-style: none;line-height: 24px;}
+    </style>
 </head>
 <body>
+<div class="sui-container" style="width:1024px;margin-top: 10px;">
+    <div id="title" style="height:50px;">
+        <div class="sui-row">
+            <div class="span2">2</div>
+            <div class="span6">6</div>
+        </div>
+    </div>
 
-<a href="/toLogin">登录</a>
-<div id="app">
-    {{ message }}
+    <div id="content">
+        <!-- 导航栏 -->
+        <div class="sui-navbar">
+            <div class="navbar-inner"><a href="#" class="sui-brand">SUI</a>
+                <ul class="sui-nav">
+                    <li class="active"><a href="#">首页</a></li>
+                    <li><a href="#">组件</a></li>
+                    <li class="sui-dropdown"><a href="javascript:void(0);" data-toggle="dropdown"
+                                                class="dropdown-toggle">其他 <i class="caret"></i></a>
+                        <ul role="menu" class="sui-dropdown-menu">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">关于</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">项目组成员</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">版权</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="sui-form sui-form pull-right">
+                    <input type="text" placeholder="宝贝/店铺名称...">
+                    <button class="sui-btn">搜索</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 幻灯片 -->
+        <div id="myCarousel" data-ride="carousel" data-interval="4000" class="sui-carousel slide">
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li data-target="#myCarousel" data-slide-to="1"></li>
+                <li data-target="#myCarousel" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="active item"><img src="/images/carousel-1.jpg">
+                    <div class="carousel-caption">
+                        <h4>标题</h4>
+                        <p>内容内容内容内容内容内容内容内容内容内容内容内容</p>
+                    </div>
+                </div>
+                <div class="item"><img src="/images/carousel-2.jpg">
+                    <div class="carousel-caption">
+                        <h4>标题</h4>
+                        <p>内容内容内容内容内容内容内容内容内容内容内容内容</p>
+                    </div>
+                </div>
+                <div class="item"><img src="/images/carousel-3.jpg">
+                    <div class="carousel-caption">
+                        <h4>标题</h4>
+                        <p>内容内容内容内容内容内容内容内容内容内容内容内容</p>
+                    </div>
+                </div>
+            </div>
+            <a href="#myCarousel" data-slide="prev" class="carousel-control left">‹</a><a href="#myCarousel"
+                                                                                          data-slide="next"
+                                                                                          class="carousel-control right">›</a>
+        </div>
+
+        <!-- 信息 -->
+        <div id="message">
+            <div class="sui-row-fluid" style="margin-top: 10px;">
+                <div class="span6" style="height:200px;">
+                    <ul class="sui-nav nav-tabs nav-primary" style="margin-bottom: 0px;">
+                        <li class="active"><a><h6>标签一</h6></a></li>
+                    </ul>
+                    <div class="tab-content tab-wraped" style="border: 0px;">
+                        <div class="tab-pane active" >
+                            <ul>
+                                <li>aaaa</li>
+                                <li>aaaa</li>
+                                <li>aaaa</li>
+                                <li>aaaa</li>
+                                <li>aaaa</li>
+                                <li>aaaa</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="span6" style="height:200px;">
+                    <ul class="sui-nav nav-tabs nav-primary" style="margin-bottom: 0px;">
+                        <li class="active"><a><h6>标签一</h6></a></li>
+                    </ul>
+                    <div class="tab-content tab-wraped" style="border: 0px;">
+                        <div class="tab-pane active">
+                            <ul>
+                                <li>11</li>
+                                <li>11</li>
+                                <li>11</li>
+                                <li>11</li>
+                                <li>11</li>
+                                <li>11</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sui-row-fluid" style="margin-top: 10px;">
+                <div class="span6" style="height:200px;">
+                    <ul class="sui-nav nav-tabs nav-primary" style="margin-bottom: 0px;">
+                        <li class="active"><a><h6>标签一</h6></a></li>
+                    </ul>
+                    <div class="tab-content tab-wraped" style="border: 0px;">
+                        <div class="tab-pane active" >
+                            <ul>
+                                <li>aaaa</li>
+                                <li>aaaa</li>
+                                <li>aaaa</li>
+                                <li>aaaa</li>
+                                <li>aaaa</li>
+                                <li>aaaa</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="span6" style="height:200px;">
+                    <ul class="sui-nav nav-tabs nav-primary" style="margin-bottom: 0px;">
+                        <li class="active"><a><h6>标签一</h6></a></li>
+                    </ul>
+                    <div class="tab-content tab-wraped" style="border: 0px;">
+                        <div class="tab-pane active">
+                            <ul>
+                                <li>11</li>
+                                <li>11</li>
+                                <li>11</li>
+                                <li>11</li>
+                                <li>11</li>
+                                <li>11</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="foot" style="border-top: 2px solid #E2E2E2;margin-top: 20px;padding: 20px;">
+        <div style="text-align: center;line-height: 24px;">
+            备案编号：滇ICP备XXXXXXX号 | 云ICP备XXXXXX号 编号：XXXXXX | 联系我们 | 后台登录
+        </div>
+        <div style="text-align: center;line-height: 24px;">
+            Copyright © 2018 XXXXXX All Rights Reserved.
+        </div>
+    </div>
 </div>
-<script type="text/javascript">
-    var app = new Vue({
-        el: '#app',
-        data: {
-            message: "测试第一个"
-        }
-    });
-</script>
-
-
-<div id="app-2">
-  <span v-bind:title="message">
-    鼠标悬停几秒钟查看此处动态绑定的提示信息！
-  </span>
-</div>
-
-<script type="text/javascript">
-    var app2 = new Vue({
-        el: '#app-2',
-        data: {
-            message: '123456'
-        }
-    })
-</script>
-
-<div id="app-3">
-    <p v-if="seen">现在你看到我了</p>
-</div>
-<script type="text/javascript">
-    var app3 = new Vue({
-        el: '#app-3',
-        data: {
-            seen: true
-        }
-    })
-</script>
-
-
-<div id="app-4">
-    <p>{{message}}</p>
-    <button v-on:click="test">test</button>
-</div>
-<script type="text/javascript">
-    var app4 = new Vue({
-        el: '#app-4',
-        data: {
-            message: 'aaaa'
-        },
-        methods: {
-            test: function ()
-            {
-                this.message = 'bbbb';
-            }
-        }
-    })
-</script>
-
-<div id="app-5">
-    <p>{{message}}</p>
-    <input v-model="message">
-</div>
-<script type="text/javascript">
-    var app5 = new Vue({
-        el: '#app-5',
-        data: {
-            message: 'aaaa'
-        }
-    })
-</script>
-
-
-<div id="app-6">
-    <input v-model="ok">
-    <h1 v-if="ok">Yes</h1>
-    <h1 v-else>No</h1>
-</div>
-<script type="text/javascript">
-    var app6 = new Vue({
-        el: '#app-6',
-        data: {
-            ok: 0
-        }
-    })
-</script>
-
-
-<input id="app-7" type="text" v-on:keyup.enter="ttt" v-on:keyup.delete="sss">
-<script type="text/javascript">
-    new Vue({
-        el:'#app-7',
-        methods:{
-            ttt:function()
-            {
-                alert('aaa');
-            },
-            sss:function (event)
-            {
-                alert('sss');
-            }
-        }
-    })
-</script>
-
 </body>
 </html>

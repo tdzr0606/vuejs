@@ -16,9 +16,6 @@ public class DirectoryTools
     //SESSION中存储登录用户信息
     public static final String SESSION_LOGIN_USER="loginUser";
 
-    public static final String SESSION_LOGIN_P_FUNCTION = "parentFunction";
-    public static final String SESSION_LOGIN_S_FUNCTION = "subFunction";
-
 
     //图片验证码 来源 后台登录指定
     public static final String VCODE_WEBADMIN_LOGIN = "webAdminLogin";
