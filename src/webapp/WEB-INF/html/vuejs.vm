@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>vuejs</title>
+    <script type="text/javascript" src="/js/vue_debug.js"></script>
+</head>
+<body>
+<div id="app">
+    {{ message }}
+</div>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: "测试第一个"
+        }
+    });
+</script>
+
+
+<div id="app-2">
+  <span v-bind:title="message">
+    鼠标悬停几秒钟查看此处动态绑定的提示信息！
+  </span>
+</div>
+
+<script type="text/javascript">
+    var app2 = new Vue({
+        el: '#app-2',
+        data: {
+            message: '123456'
+        }
+    })
+</script>
+
+<div id="app-3">
+    <p v-if="seen">现在你看到我了</p>
+</div>
+<script type="text/javascript">
+    var app3 = new Vue({
+        el: '#app-3',
+        data: {
+            seen: true
+        }
+    })
+</script>
+
+
+<div id="app-4">
+    <p>{{message}}</p>
+    <button v-on:click="test">test</button>
+</div>
+<script type="text/javascript">
+    var app4 = new Vue({
+        el: '#app-4',
+        data: {
+            message: 'aaaa'
+        },
+        methods: {
+            test: function ()
+            {
+                this.message = 'bbbb';
+            }
+        }
+    })
+</script>
+
+<div id="app-5">
+    <p>{{message}}</p>
+    <input v-model="message">
+</div>
+<script type="text/javascript">
+    var app5 = new Vue({
+        el: '#app-5',
+        data: {
+            message: 'aaaa'
+        }
+    })
+</script>
+
+
+<div id="app-6">
+    <input v-model="ok">
+    <h1 v-if="ok">Yes</h1>
+    <h1 v-else>No</h1>
+</div>
+<script type="text/javascript">
+    var app6 = new Vue({
+        el: '#app-6',
+        data: {
+            ok: 0
+        }
+    })
+</script>
+
+
+<input id="app-7" type="text" v-on:keyup.enter="ttt" v-on:keyup.delete="sss">
+<script type="text/javascript">
+    new Vue({
+        el:'#app-7',
+        methods:{
+            ttt:function()
+            {
+                alert('aaa');
+            },
+            sss:function (event)
+            {
+                alert('sss');
+            }
+        }
+    })
+</script>
+</body>
+</html>
